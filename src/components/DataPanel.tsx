@@ -1,0 +1,109 @@
+import { Button, Textarea, TextInput, Tooltip } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import TimeAmountInput from '../elements/TimeAmountInput';
+import { fileActions } from '../state/fileSlice';
+import type { RootState } from '../state/store';
+import styles from './DataPanel.module.scss';
+
+export interface DataPanelProps {
+  
+}
+
+function DataPanel (props: DataPanelProps) {
+  const file = useSelector((state: RootState) => state.file);
+  const dispatch = useDispatch();
+
+  const [lyrics, setLyrics] = useState("a\nb");
+
+  useEffect(() => {
+    setLyrics(file.lyrics.join("\n"));
+  }, [file.lyrics]);
+
+  return (
+    <div className={styles.panel}>
+      <Tooltip
+        label="Open a song file to import some of its data and to be able to play it."
+      >
+        <Button
+        >
+          Open song file
+        </Button>
+      </Tooltip>
+
+      <TextInput
+        label="Title"
+        placeholder="The song's title"
+      />
+
+      <div className={styles.row}>
+        <TextInput
+          label="Artist"
+          placeholder="The artist(s) interpreting the song."
+        />
+
+        <TextInput
+          label="Album"
+          placeholder="The album the song belongs to."
+        />
+      </div>
+
+      <div className={styles.row}>
+        <TextInput
+          label="Author"
+          placeholder="The author of the song."
+        />
+
+        <TextInput
+          label="Lyricist"
+          placeholder="The author of the song's lyrics."
+        />
+      </div>
+
+      <TimeAmountInput
+        label="Length"
+        tooltip="The duration of the song."
+        value={file.length}
+        onBlur={handleTimeBlur}
+        required
+      />
+
+      <TextInput
+        label="Offset (ms)"
+        placeholder="An offset, in milliseconds, indicating how earlier lyrics appear before their explicit timestamp."
+      />
+
+      <TextInput
+        label="By"
+        placeholder="You: the author of this file."
+      />
+
+      <Textarea
+        classNames={{
+          root: styles.lyricsTextarea,
+          wrapper: styles.lyricsTextareaWrapper,
+          input: styles.lyricsTextareaInput,
+        }}
+        label="Lyrics"
+        placeholder="One line per line that will appear in the file."
+        value={lyrics}
+        onChange={evt => setLyrics(evt.currentTarget.value)}
+        onBlur={handleLyricsBlur}
+      />
+    </div>
+  );
+
+  function handleLyricsBlur (
+    evt: React.FocusEvent<HTMLTextAreaElement, Element>
+  ) {
+    const lines = evt.currentTarget.value.split("\n").filter(l => l !== "");
+
+    dispatch(fileActions.updateLyrics(lines));
+  }
+
+  function handleTimeBlur (ms: number) {
+    dispatch(fileActions.updateLength(ms));
+  }
+}
+
+export default DataPanel;

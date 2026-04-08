@@ -1,0 +1,45 @@
+.panel {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+
+  > .row {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-items: stretch;
+    gap: 16px;
+    
+    > * {
+      flex: 1;
+    }
+  }
+
+  > .lyricsTextarea {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    > .lyricsTextareaWrapper {
+      flex: 1;
+
+      .lyricsTextareaInput {
+        height: 100%;
+
+        padding: 6px 8px;
+
+        font-family: var(--font-consolas);
+        font-size: 10pt;
+        line-height: 15px;
+
+        white-space: nowrap;
+      }
+    }
+  }
+}

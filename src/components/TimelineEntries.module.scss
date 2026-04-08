@@ -1,0 +1,90 @@
+.entryFrame {
+  width: 100%;
+  height: 100%;
+
+  padding-left: calc(var(--ruler-width) - 21px);
+  padding-right: 32px;
+
+  > .entryContainer {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.entry {
+  cursor: grab;
+
+  position: absolute;
+  left: 0;
+  top: var(--top);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  width: 100%;
+  height: 0px;
+
+  > .handle {
+    width: 25px;
+    height: 18px;
+    flex-shrink: 0;
+
+    background-color: white;
+    border: 1px solid var(--color-primary-d3);
+  }
+
+  > .bridge {
+    width: 16px;
+    height: 1px;
+    flex-shrink: 0;
+
+    background-color: var(--color-primary-d3);
+  }
+
+  > .body {
+    display: flex;
+    flex-direction: row;
+
+    border: 1px solid var(--color-primary-d3);
+    background-color: var(--color-primary-l3);
+
+    > .timestampContainer {
+      flex-shrink: 0;
+      width: 120px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border-right: 1px solid var(--color-primary-l2);
+
+      .timestamp {
+        display: flex;
+        align-items: end;
+
+        font-family: font('Saira Stencil');
+        font-weight: 600;
+        font-size: 10pt;
+        text-align: center;
+
+        > .ms {
+          font-size: 8pt;
+          font-weight: 400;
+          transform: translateY(-1px);
+        }
+      }
+    }
+
+    > .content {
+      padding: 4px 16px;
+
+      background-color: var(--color-primary-l4);
+
+      font-size: 10pt;
+      text-align: center;
+    }
+  }
+}
