@@ -1,6 +1,7 @@
 import { Button, Textarea, TextInput, Tooltip } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { TOOL_NAME, TOOL_VERSION } from '../Constants';
 import { useSongFile } from '../context/useSongFile';
 import TimeAmountInput from '../elements/TimeAmountInput';
 import useReduxStringField from '../hooks/useReduxStringField';
@@ -34,78 +35,84 @@ function DataPanel ({
 
   return (
     <div className={styles.panel}>
-      <Tooltip
-        label="Open a song file to import some of its data and to be able to play it."
-      >
-        <Button
-          onClick={handleOpenSong}
+      <div className={styles.form}>
+        <Tooltip
+          label="Open a song file to import some of its data and to be able to play it."
         >
-          Open song file
-        </Button>
-      </Tooltip>
+          <Button
+            onClick={handleOpenSong}
+          >
+            Open song file
+          </Button>
+        </Tooltip>
 
-      <TextInput
-        label="Title"
-        placeholder="The song's title"
-        value={title.value}
-        onChange={title.handleChange}
-        onBlur={title.handleBlur}
-      />
-
-      <div className={styles.row}>
         <TextInput
-          label="Artist"
-          placeholder="The artist(s) interpreting the song."
+          label="Title"
+          placeholder="The song's title"
+          value={title.value}
+          onChange={title.handleChange}
+          onBlur={title.handleBlur}
+        />
+
+        <div className={styles.row}>
+          <TextInput
+            label="Artist"
+            placeholder="The artist(s) interpreting the song."
+          />
+
+          <TextInput
+            label="Album"
+            placeholder="The album the song belongs to."
+          />
+        </div>
+
+        <div className={styles.row}>
+          <TextInput
+            label="Author"
+            placeholder="The author of the song."
+          />
+
+          <TextInput
+            label="Lyricist"
+            placeholder="The author of the song's lyrics."
+          />
+        </div>
+
+        <TimeAmountInput
+          label="Length"
+          tooltip="The duration of the song."
+          value={file.length}
+          onBlur={handleTimeBlur}
+          required
         />
 
         <TextInput
-          label="Album"
-          placeholder="The album the song belongs to."
+          label="Offset (ms)"
+          placeholder="An offset, in milliseconds, indicating how earlier lyrics appear before their explicit timestamp."
+        />
+
+        <TextInput
+          label="By"
+          placeholder="You: the author of this file."
+        />
+
+        <Textarea
+          classNames={{
+            root: styles.lyricsTextarea,
+            wrapper: styles.lyricsTextareaWrapper,
+            input: styles.lyricsTextareaInput,
+          }}
+          label="Lyrics"
+          placeholder="One line per line that will appear in the file."
+          value={lyrics}
+          onChange={evt => setLyrics(evt.currentTarget.value)}
+          onBlur={handleLyricsBlur}
         />
       </div>
 
-      <div className={styles.row}>
-        <TextInput
-          label="Author"
-          placeholder="The author of the song."
-        />
-
-        <TextInput
-          label="Lyricist"
-          placeholder="The author of the song's lyrics."
-        />
+      <div className={styles.appInfo}>
+        {TOOL_NAME} — {TOOL_VERSION}
       </div>
-
-      <TimeAmountInput
-        label="Length"
-        tooltip="The duration of the song."
-        value={file.length}
-        onBlur={handleTimeBlur}
-        required
-      />
-
-      <TextInput
-        label="Offset (ms)"
-        placeholder="An offset, in milliseconds, indicating how earlier lyrics appear before their explicit timestamp."
-      />
-
-      <TextInput
-        label="By"
-        placeholder="You: the author of this file."
-      />
-
-      <Textarea
-        classNames={{
-          root: styles.lyricsTextarea,
-          wrapper: styles.lyricsTextareaWrapper,
-          input: styles.lyricsTextareaInput,
-        }}
-        label="Lyrics"
-        placeholder="One line per line that will appear in the file."
-        value={lyrics}
-        onChange={evt => setLyrics(evt.currentTarget.value)}
-        onBlur={handleLyricsBlur}
-      />
     </div>
   );
 
