@@ -123,7 +123,7 @@ function openFile (content: string) : FileSlice {
     artist: lrc.info.ar ?? "",
     album: lrc.info.al ?? "",
     author: lrc.info.au ?? "",
-    lyricist: lrc.info.r ?? "",
+    lyricist: lrc.info.lr ?? "",
     by: lrc.info.by ?? "",
     lyrics,
     timestamps,
