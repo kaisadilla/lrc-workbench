@@ -1,0 +1,50 @@
+.cursor {
+  --color: var(--color-primary-l3);
+
+  pointer-events: none;
+
+  position: absolute;
+  top: var(--top);
+  left: 0;
+
+  width: 100%;
+  height: 1px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  
+  > .line {
+    flex: 1;
+
+    height: 1px;
+    
+    background-color: var(--color);
+  }
+
+  > .time {
+    padding: 0 16px 0 8px;
+    font-size: 8pt;
+    color: var(--color);
+
+    border-left: 1px solid var(--color);
+  }
+
+  > .next {
+    position: absolute;
+
+    width: 100%;
+    top: 4px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 9pt;
+    font-weight: 300;
+    color: var(--color);
+
+    filter: drop-shadow(0px 0px 1px black)
+      drop-shadow(0px 0px 1px black);
+  }
+}

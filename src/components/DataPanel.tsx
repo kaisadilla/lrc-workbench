@@ -1,16 +1,22 @@
 import { Button, Textarea, TextInput, Tooltip } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { useSongFile } from '../context/useSongFile';
 import TimeAmountInput from '../elements/TimeAmountInput';
 import { fileActions } from '../state/fileSlice';
 import type { RootState } from '../state/store';
+import { getAudioDuration, openFile } from '../util';
 import styles from './DataPanel.module.scss';
 
 export interface DataPanelProps {
   
 }
 
-function DataPanel (props: DataPanelProps) {
+function DataPanel ({
+  
+}: DataPanelProps) {
+  const songCtx = useSongFile();
+
   const file = useSelector((state: RootState) => state.file);
   const dispatch = useDispatch();
 
@@ -26,6 +32,7 @@ function DataPanel (props: DataPanelProps) {
         label="Open a song file to import some of its data and to be able to play it."
       >
         <Button
+          onClick={handleOpenSong}
         >
           Open song file
         </Button>
@@ -92,6 +99,18 @@ function DataPanel (props: DataPanelProps) {
       />
     </div>
   );
+
+  async function handleOpenSong () {
+    const f = await openFile("audio/*");
+    if (!f) return;
+
+    const url = URL.createObjectURL(f);
+    songCtx.setFileUrl(url);
+
+    const duration = await getAudioDuration(url);
+    if (duration === undefined) return;
+    dispatch(fileActions.updateLength(duration));
+  }
 
   function handleLyricsBlur (
     evt: React.FocusEvent<HTMLTextAreaElement, Element>

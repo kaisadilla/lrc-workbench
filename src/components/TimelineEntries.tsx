@@ -2,9 +2,14 @@ import type { DragLocationHistory } from '@atlaskit/pragmatic-drag-and-drop/dist
 import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { disableNativeDragPreview } from '@atlaskit/pragmatic-drag-and-drop/element/disable-native-drag-preview';
 import { preventUnhandled } from '@atlaskit/pragmatic-drag-and-drop/prevent-unhandled';
+import { Tooltip } from '@mantine/core';
+import { TrashIcon } from '@phosphor-icons/react';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Fmt from '../Fmt';
 import MathExt from '../MathExt';
+import { fileActions } from '../state/fileSlice';
+import type { RootState } from '../state/store';
 import styles from './TimelineEntries.module.scss';
 
 export interface TimelineEntryData {
@@ -14,14 +19,15 @@ export interface TimelineEntryData {
 
 export interface TimelineEntriesProps {
   msPerPx: number;
-  data: TimelineEntryData[];
 }
 
 function TimelineEntries ({
   msPerPx,
-  data,
 }: TimelineEntriesProps) {
-  const [y, setY] = useState(150);
+  const file = useSelector((state: RootState) => state.file);
+  const dispatch = useDispatch();
+
+  const [ focus, setFocus ] = useState(0);
 
   return (
     <div
@@ -29,44 +35,70 @@ function TimelineEntries ({
     >
       <div
         className={styles.entryContainer}
+        onMouseUp={handleMouseUp}
       >
-        <TimelineEntry
+        {file.timestamps.map((t, i) => <TimelineEntry
+          key={i}
           msPerPx={msPerPx}
-          content="Then I said 'hi' because it was illegal not to :( This will, in fact, be an extremely extreme extremature which is not ever to be seen quite actually."
-          y={y}
-          onMove={setY}
-        />
+          timestamp={t}
+          index={i}
+          focused={focus === i}
+          onMove={handleMoveEntry}
+          onDelete={handleDeleteEntry}
+          onFocus={setFocus}
+        />)}
       </div>
     </div>
   );
+
+  function handleMoveEntry (index: number, timestamp: number) {
+    dispatch(fileActions.moveTimestamp({ index, timestamp: timestamp, }));
+  }
+
+  function handleDeleteEntry (index: number) {
+    dispatch(fileActions.deleteTimestamp(index));
+  }
+
+  function handleMouseUp (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    if (evt.target !== evt.currentTarget) return;
+    
+    const yAbs = evt.clientY - evt.currentTarget.getBoundingClientRect().top;
+
+    const time = yAbs * msPerPx;
+    if (time >= file.length) return;
+
+    dispatch(fileActions.addTimestamp(time));
+  }
 }
 
 interface TimelineEntryProps {
   msPerPx: number;
-  content: string;
-  y: number;
-  onMove?: (yNew: number) => void;
+  timestamp: number;
+  index: number;
+  focused?: boolean;
+  onMove?: (index: number, newTimestamp: number) => void;
+  onDelete?: (index: number) => void;
+  onFocus?: (index: number) => void;
 }
 
 function TimelineEntry ({
   msPerPx,
-  content,
-  y: nativeY,
+  timestamp,
+  index,
+  focused,
   onMove,
+  onDelete,
+  onFocus,
 }: TimelineEntryProps) {
-  const [y, setY] = useState(nativeY);
+  const lyrics = useSelector((state: RootState) => state.file.lyrics);
+
+  const [yDrag, setYDrag] = useState<number | null>(null);
 
   const elRef = useRef<HTMLDivElement>(null);
-  const handleRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setY(nativeY);
-  }, [nativeY]);
 
   useEffect(() => {
     const el = elRef.current;
-    const handle = handleRef.current;
-    if (!el || !handle) return;
+    if (!el) return;
 
     return draggable({
       element: el,
@@ -83,7 +115,7 @@ function TimelineEntry ({
       onDrag ({ location }) {
         const yUpdate = getDragPos(location);
 
-        setY(yUpdate);
+        setYDrag(yUpdate);
       },
 
       onDrop ({ location }) {
@@ -91,14 +123,16 @@ function TimelineEntry ({
         
         const yUpdate = getDragPos(location);
 
-        onMove?.(yUpdate);
+        setYDrag(null);
+        onMove?.(index, getTimestamp(yUpdate));
       }
     });
-  }, [y]);
+  }, [yDrag]);
 
+  const y = yDrag ?? getY();
   const ms = y * msPerPx;
-
   const ts = Fmt.timestamp(ms / 1000, 3);
+  const line = lyrics[index] ?? null;
 
   return (
     <div
@@ -107,9 +141,10 @@ function TimelineEntry ({
       style={{
         "--top": `${y}px`,
       } as CSSProperties}
+      onMouseDown={handleMouseDown}
+      data-focused={focused}
     >
       <div
-        ref={handleRef}
         className={styles.handle}
       >
         
@@ -124,12 +159,33 @@ function TimelineEntry ({
             <span className={styles.ms}>{ts.slice(-4)}</span>
           </div>
         </div>
-        <div className={styles.content}>
-          {content}
+        <div
+          className={styles.content}
+          data-exists={line !== null}
+        >
+          {line ?? "You've run out of lines! This line will be discarded."}
         </div>
+
+        <Tooltip label="Remove line">
+          <button
+            className={styles.deleteButton}
+            draggable={false}
+            onMouseUp={handleDelete}
+          >
+            <TrashIcon />
+          </button>
+        </Tooltip>
       </div>
     </div>
   );
+
+  function handleMouseDown () {
+    onFocus?.(index);
+  }
+
+  function handleDelete () {
+    onDelete?.(index);
+  }
 
   function getDragPos (location: DragLocationHistory) {
     const rect = elRef.current!.parentElement!.getBoundingClientRect();
@@ -139,6 +195,14 @@ function TimelineEntry ({
       0,
       rect.height
     );
+  }
+
+  function getY () {
+    return timestamp / msPerPx;
+  }
+
+  function getTimestamp (yPos: number) {
+    return yPos * msPerPx;
   }
 }
 

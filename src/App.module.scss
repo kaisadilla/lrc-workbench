@@ -4,5 +4,17 @@
   overflow: hidden;
 
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
+  .panelContainer {
+    flex: 1;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: row;
+  }
+
+  .playerContainer {
+    height: 64px;
+  }
 }

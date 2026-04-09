@@ -3,6 +3,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './App.tsx';
+import { SongFileProvider } from './context/useSongFile.tsx';
 import { store } from './state/store.ts';
 
 const mantineTheme = createTheme({
@@ -57,9 +58,11 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
     <MantineProvider theme={mantineTheme}>
+    <SongFileProvider>
     
       <App />
-    
+      
+    </SongFileProvider>
     </MantineProvider>
     </Provider>
   </StrictMode>,

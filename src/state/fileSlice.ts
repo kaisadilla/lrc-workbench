@@ -30,8 +30,40 @@ const fileSlice = createSlice({
 
       state.lyrics = lyrics;
     },
+
+    addTimestamp (state, action: PayloadAction<number>) {
+      const timestamp = action.payload;
+
+      state.timestamps.push(timestamp);
+      sortTimestamps(state.timestamps);
+    },
+
+    deleteTimestamp (state, action: PayloadAction<number>) {
+      const index = action.payload;
+
+      state.timestamps.splice(index, 1);
+    },
+
+    moveTimestamp (state, action: PayloadAction<{
+      index: number,
+      timestamp: number,
+    }>) {
+      const { index, timestamp } = action.payload;
+
+      if (index >= state.timestamps.length) {
+        console.error("Timestamp is out of bounds.");
+        return;
+      }
+
+      state.timestamps[index] = timestamp;
+      sortTimestamps(state.timestamps);
+    }
   },
 });
+
+function sortTimestamps (timestamps: number[]) {
+  timestamps.sort((a, b) => a - b);
+}
 
 export const fileReducer = fileSlice.reducer;
 export const fileActions = fileSlice.actions;
