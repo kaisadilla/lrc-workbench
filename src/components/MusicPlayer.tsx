@@ -18,10 +18,10 @@ function MusicPlayer ({
   useEffect(() => {
     if (!audioRef.current) return;
 
-    audioRef.current.fastSeek(0);
+    audioRef.current.currentTime = 0;
     audioRef.current.pause();
   }, [songCtx.fileUrl]);
-  
+
   useAudioTime(
     audioRef,
     a => songCtx.setTime(Math.floor(a.currentTime * 1000))
@@ -102,7 +102,7 @@ function MusicPlayer ({
   function handleReset () {
     if (!audioRef.current) return;
 
-    audioRef.current.fastSeek(0);
+    audioRef.current.currentTime = 0;
     audioRef.current.play();
   }
 }
