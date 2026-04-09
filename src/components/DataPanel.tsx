@@ -41,11 +41,11 @@ function DataPanel ({
     v => fileActions.updateDataField({ field: 'author', value: v, }),
   );
   const lyricist = useReduxStringField(
-    file.author,
+    file.lyricist,
     v => fileActions.updateDataField({ field: 'lyricist', value: v, }),
   );
   const by = useReduxStringField(
-    file.author,
+    file.by,
     v => fileActions.updateDataField({ field: 'by', value: v, }),
   );
 
@@ -78,11 +78,17 @@ function DataPanel ({
           <TextInput
             label="Artist"
             placeholder="The artist(s) interpreting the song."
+            value={artist.value}
+            onChange={artist.handleChange}
+            onBlur={artist.handleBlur}
           />
 
           <TextInput
             label="Album"
             placeholder="The album the song belongs to."
+            value={album.value}
+            onChange={album.handleChange}
+            onBlur={album.handleBlur}
           />
         </div>
 
@@ -90,11 +96,17 @@ function DataPanel ({
           <TextInput
             label="Author"
             placeholder="The author of the song."
+            value={author.value}
+            onChange={author.handleChange}
+            onBlur={author.handleBlur}
           />
 
           <TextInput
             label="Lyricist"
             placeholder="The author of the song's lyrics."
+            value={lyricist.value}
+            onChange={lyricist.handleChange}
+            onBlur={lyricist.handleBlur}
           />
         </div>
 
@@ -114,6 +126,9 @@ function DataPanel ({
         <TextInput
           label="By"
           placeholder="You: the author of this file."
+          value={by.value}
+          onChange={by.handleChange}
+          onBlur={by.handleBlur}
         />
 
         <Textarea
