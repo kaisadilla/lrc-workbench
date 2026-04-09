@@ -100,7 +100,7 @@ function AppRibbon (props: AppRibbonProps) {
       type: "text/plain;charset=utf-8",
     });
 
-    saveAs(blob, "untitled.lrc");
+    saveAs(blob, `${file.title.toLocaleLowerCase().replaceAll(" ", "-")}.lrc`);
   }
 }
 

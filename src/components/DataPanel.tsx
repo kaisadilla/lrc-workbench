@@ -28,6 +28,26 @@ function DataPanel ({
     file.title,
     v => fileActions.updateDataField({ field: 'title', value: v, }),
   );
+  const artist = useReduxStringField(
+    file.artist,
+    v => fileActions.updateDataField({ field: 'artist', value: v, }),
+  );
+  const album = useReduxStringField(
+    file.album,
+    v => fileActions.updateDataField({ field: 'album', value: v, }),
+  );
+  const author = useReduxStringField(
+    file.author,
+    v => fileActions.updateDataField({ field: 'author', value: v, }),
+  );
+  const lyricist = useReduxStringField(
+    file.author,
+    v => fileActions.updateDataField({ field: 'lyricist', value: v, }),
+  );
+  const by = useReduxStringField(
+    file.author,
+    v => fileActions.updateDataField({ field: 'by', value: v, }),
+  );
 
   useEffect(() => {
     setLyrics(file.lyrics.join("\n"));

@@ -114,6 +114,8 @@ function openFile (content: string) : FileSlice {
   const lyrics = lrc.lyrics.map(l => l.content);
   const timestamps = lrc.lyrics.map(l => Math.floor(l.timestamp * 1000));
 
+  console.log(lrc);
+
   return {
     length,
     offset,
