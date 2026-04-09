@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useSongFile } from '../context/useSongFile';
 import TimeAmountInput from '../elements/TimeAmountInput';
+import useReduxStringField from '../hooks/useReduxStringField';
 import { fileActions } from '../state/fileSlice';
 import type { RootState } from '../state/store';
 import { getAudioDuration, openFile } from '../util';
@@ -20,7 +21,12 @@ function DataPanel ({
   const file = useSelector((state: RootState) => state.file);
   const dispatch = useDispatch();
 
-  const [lyrics, setLyrics] = useState("a\nb");
+  const [ lyrics, setLyrics ] = useState("a\nb");
+
+  const title = useReduxStringField(
+    file.title,
+    v => fileActions.updateDataField({ field: 'title', value: v, }),
+  );
 
   useEffect(() => {
     setLyrics(file.lyrics.join("\n"));
@@ -41,6 +47,9 @@ function DataPanel ({
       <TextInput
         label="Title"
         placeholder="The song's title"
+        value={title.value}
+        onChange={title.handleChange}
+        onBlur={title.handleBlur}
       />
 
       <div className={styles.row}>

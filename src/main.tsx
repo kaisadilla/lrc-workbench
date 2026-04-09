@@ -1,10 +1,13 @@
 import { createTheme, MantineProvider, Modal, Popover, Text, Tooltip } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './App.tsx';
 import { SongFileProvider } from './context/useSongFile.tsx';
 import { store } from './state/store.ts';
+
+type ModalSettings = any;
 
 const mantineTheme = createTheme({
   colors: {
@@ -54,15 +57,27 @@ const mantineTheme = createTheme({
   },
 });
 
+const modalProps = {
+  transitionProps: {
+    transition: 'fade',
+    duration: 50,
+  },
+  centered: true,
+} as ModalSettings;
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
     <MantineProvider theme={mantineTheme}>
+    <ModalsProvider modalProps={modalProps}>
+
     <SongFileProvider>
     
       <App />
       
     </SongFileProvider>
+
+    </ModalsProvider>
     </MantineProvider>
     </Provider>
   </StrictMode>,

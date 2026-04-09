@@ -10,9 +10,26 @@
 
 }
 
+button,
+[role=button] {
+  &:not([disabled]) {
+    cursor: pointer;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+}
+
 button {
   background: unset;
   border: unset;
   text-align: unset;
   padding: 0;
+}
+
+h5 {
+  font-size: 10pt;
+  font-weight: 600;
+  margin: 12px 0;
 }

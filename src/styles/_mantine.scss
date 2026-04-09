@@ -4,3 +4,20 @@
     height: 1px;
   }
 }
+
+.mantine-Tooltip-tooltip,
+.mantine-TooltipFloating-tooltip {
+  background-color: white;
+  border: 1px solid var(--color-primary-d2);
+  color: var(--color-text);
+  font-size: 10pt;
+  z-index: 5000000 !important;
+}
+
+.mantine-Modal-root {
+  --mb-z-index: 1000000 !important;
+
+  .mantine-Modal-content {
+    border: 1px solid var(--color-primary);
+  }
+}

@@ -34,7 +34,7 @@ function TimelineCursor ({
   if (yAbs < 0) return null;
 
   let nextIndex = file.timestamps.findIndex(ts => ts > time);
-  if (nextIndex === -1) nextIndex = file.timestamps.length;
+  if (nextIndex >= file.lyrics.length) nextIndex = -1;
 
   return (
     <div
