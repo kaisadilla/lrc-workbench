@@ -51,7 +51,7 @@ function TimelineCursor ({
       </div>
 
       {nextIndex !== -1 && <div className={styles.next}>
-        Next: "{file.lyrics[nextIndex]}"
+        <span>Next: "{file.lyrics[nextIndex]}"</span>
       </div>}
     </div>
   );
