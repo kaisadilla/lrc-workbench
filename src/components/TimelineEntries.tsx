@@ -6,6 +6,7 @@ import { Tooltip } from '@mantine/core';
 import { TrashIcon } from '@phosphor-icons/react';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSongFile } from '../context/useSongFile';
 import Fmt from '../Fmt';
 import MathExt from '../MathExt';
 import { fileActions } from '../state/fileSlice';
@@ -26,6 +27,8 @@ function TimelineEntries ({
 }: TimelineEntriesProps) {
   const file = useSelector((state: RootState) => state.file);
   const dispatch = useDispatch();
+
+  const songCtx = useSongFile();
 
   const [ focus, setFocus ] = useState(0);
 
@@ -61,13 +64,15 @@ function TimelineEntries ({
 
   function handleMouseUp (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (evt.target !== evt.currentTarget) return;
-    
+    if (!songCtx.audioRef.current) return;
+
     const yAbs = evt.clientY - evt.currentTarget.getBoundingClientRect().top;
 
     const time = yAbs * msPerPx;
     if (time >= file.length) return;
-
-    dispatch(fileActions.addTimestamp(time));
+    
+    songCtx.audioRef.current.currentTime = time / 1000;
+    songCtx.setTime(time);
   }
 }
 

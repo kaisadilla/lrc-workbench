@@ -1,7 +1,8 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import type { StateSetter } from "../types";
 
 interface SongFileValue {
+  audioRef: React.RefObject<HTMLAudioElement | null>;
   fileUrl: string | null;
   isPlaying: boolean;
   time: number;
@@ -13,6 +14,8 @@ interface SongFileValue {
 const SongFileContext = createContext(undefined as SongFileValue | undefined);
 
 export const SongFileProvider = ({ children }: any) => {
+  const audioRef = useRef<HTMLAudioElement>(null);
+
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [isPlaying, setPlaying] = useState(false);
   const [time, setTime] = useState(0);
@@ -25,6 +28,7 @@ export const SongFileProvider = ({ children }: any) => {
 
   return (
     <SongFileContext.Provider value={{
+      audioRef,
       fileUrl,
       isPlaying,
       time,

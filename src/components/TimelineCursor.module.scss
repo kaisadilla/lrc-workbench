@@ -13,6 +13,29 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  > .addButton {
+    pointer-events: all;
+
+    width: 64px;
+    height: 32px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--color-primary-l2);
+    border: 1px solid var(--color-primary-l3);
+    border-left: 0;
+
+    &:hover {
+      background-color: var(--color-primary-l3);
+    }
+
+    &:active {
+      background-color: var(--color-primary-l1);
+    }
+  }
   
   > .line {
     flex: 1;

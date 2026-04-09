@@ -1,6 +1,6 @@
 import { Slider, Tooltip } from '@mantine/core';
 import { ArrowClockwiseIcon, PauseIcon, PlayIcon } from '@phosphor-icons/react';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSongFile } from '../context/useSongFile';
 import Fmt from '../Fmt';
 import useAudioTime from '../hooks/useAudioTime';
@@ -12,8 +12,7 @@ export interface MusicPlayerProps {
 function MusicPlayer ({
 }: MusicPlayerProps) {
   const songCtx = useSongFile();
-
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = songCtx.audioRef;
 
   useEffect(() => {
     if (!audioRef.current) return;

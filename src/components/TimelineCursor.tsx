@@ -1,3 +1,4 @@
+import { PlusIcon } from '@phosphor-icons/react';
 import type { CSSProperties } from 'react';
 import { useSelector } from 'react-redux';
 import Fmt from '../Fmt';
@@ -16,12 +17,16 @@ export interface TimelineCursorProps extends DivProps {
    * The amount of time, in seconds, that will be fit in one px.
    */
   msPerPx: number;
+  showAddButton?: boolean;
+  onAdd?: (ms: number) => void;
 }
 
 function TimelineCursor ({
   y,
   scrollOffset,
   msPerPx,
+  showAddButton = false,
+  onAdd,
   className,
   style,
   ...divProps
@@ -46,6 +51,12 @@ function TimelineCursor ({
       } as CSSProperties}
       {...divProps}
     >
+      {showAddButton && <button
+        className={styles.addButton}
+        onClick={handleAdd}
+      >
+        <PlusIcon />
+      </button>}
       <div className={styles.line} />
       <div className={styles.time}>
         {Fmt.timestamp(time / 1000, 3)}
@@ -56,6 +67,10 @@ function TimelineCursor ({
       </div>}
     </div>
   );
+
+  function handleAdd () {
+    onAdd?.(time);
+  }
 }
 
 export default TimelineCursor;

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSongFile } from '../context/useSongFile';
 import useScrollOffset from '../hooks/useScrollOffset';
 import MathExt from '../MathExt';
+import { fileActions } from '../state/fileSlice';
 import type { RootState } from '../state/store';
 import type { Vec2 } from '../types';
 import styles from './LyricsTimeline.module.scss';
@@ -115,6 +116,8 @@ const LyricsTimeline = memo(function LyricsTimeline ({
         y={mousePos.y}
         scrollOffset={scrollOffset}
         msPerPx={msPerPx}
+        onAdd={handleAddLine}
+        showAddButton
       />}
 
       {songCtx.fileUrl && <TimelineCursor
@@ -152,6 +155,12 @@ const LyricsTimeline = memo(function LyricsTimeline ({
     evt: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) {
     setMousePos(null);
+  }
+
+  function handleAddLine (time: number) {
+    if (time >= file.length) return;
+
+    dispatch(fileActions.addTimestamp(time));
   }
 });
 
