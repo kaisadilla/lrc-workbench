@@ -26,7 +26,6 @@ const TimelineWaveform = memo(function TimelineWaveform ({
   msPerPx,
   scrollOffset,
 }: TimelineWaveformProps) {
-  console.log("redone");
   const songCtx = useSongFile();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -48,12 +47,8 @@ const TimelineWaveform = memo(function TimelineWaveform ({
   useEffect(() => {
     drawWaveform();
   }, [
-    totalMs, msPerPx, scrollOffset, canvasRef, canvasRect, setCanvasRect
+    audioData, totalMs, msPerPx, scrollOffset, canvasRef, canvasRect, setCanvasRect
   ]);
-
-  useEffect(() => {
-    console.log("setCanvasRect");
-  }, [setCanvasRect]);
 
   if (!songCtx.fileUrl) return null;
 
@@ -66,7 +61,6 @@ const TimelineWaveform = memo(function TimelineWaveform ({
   );
 
   function drawWaveform () {
-    console.log("waveform");
     if (!audioData) return;
     if (sampleRate === null) return;
 
