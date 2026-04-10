@@ -21,3 +21,16 @@
     border: 1px solid var(--color-primary);
   }
 }
+
+.mantine-Tabs-root {
+  display: flex;
+  flex-direction: column;
+
+  .mantine-Tabs-list {
+    flex-shrink: 0;
+  }
+
+  .mantine-Tabs-panel {
+    flex: 1;
+  }
+}

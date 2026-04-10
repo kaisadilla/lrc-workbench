@@ -1,0 +1,47 @@
+.button {
+  --size: 32px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+
+  //width: var(--size);
+  height: var(--size);
+  padding: 0 0.5em;
+
+  border: 1px solid var(--color-primary-l1);
+  background-color: white;
+  transition: background-color 0.25s;
+
+  &:not([disabled]):hover {
+    background-color: var(--color-primary-l2);
+  }
+
+  &:not([disabled]):active {
+    background-color: var(--color-primary-l1);
+    border: 1px solid var(--color-primary);
+  }
+
+  &[data-variant='danger'] {
+    background-color: var(--color-danger);
+    border-color: var(--color-danger);
+
+    &:not([disabled]):hover {
+      background-color: var(--color-danger-l1);
+    }
+
+    &:not([disabled]):active {
+      background-color: var(--color-danger-d1);
+      border: 1px solid var(--color-danger-d2);
+    }
+  }
+
+  &[disabled] {
+    color: var(--color-secondary-l2);
+  }
+
+  > div {
+    font-size: 10pt;
+  }
+}

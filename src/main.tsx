@@ -1,5 +1,6 @@
 import { createTheme, MantineProvider, Modal, Popover, Text, Tooltip } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -72,6 +73,8 @@ createRoot(document.getElementById('root')!).render(
     <ModalsProvider modalProps={modalProps}>
 
     <SongFileProvider>
+
+      <Notifications position='top-right' zIndex={100_000_000} />
     
       <App />
       

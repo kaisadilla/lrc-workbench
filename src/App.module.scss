@@ -12,6 +12,21 @@
 
     display: flex;
     flex-direction: row;
+
+    .editorPanel {
+      height: 100%;
+      overflow: hidden !important;
+
+      .editorTabsRoot {
+        height: 100%;
+        overflow: hidden;
+
+        .editorTabsPanel {
+          height: 100%;
+          overflow: hidden;
+        }
+      }
+    }
   }
 
   .playerContainer {

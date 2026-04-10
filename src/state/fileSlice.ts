@@ -33,7 +33,7 @@ const fileSlice = createSlice({
     openFile (state, action: PayloadAction<string>) {
       const file = action.payload;
 
-      return openFile(file);
+      return openLrcFile(file);
     },
 
     updateLength (state, action: PayloadAction<number>) {
@@ -102,7 +102,7 @@ function newFile () : FileSlice {
   };
 }
 
-function openFile (content: string) : FileSlice {
+export function openLrcFile (content: string) : FileSlice {
   const lrc = Lrc.parse(content);
 
   const lengthStr = lrc.info.length ?? "01:00";
@@ -152,7 +152,37 @@ export function generateLrcFile (file: FileSlice) : string {
     lines.push(`[${Fmt.timestamp(ts / 1000, 2, 'm')}]${line}`);
   }
 
+  lines.push("");
+
   return lines.join("\n");
+}
+
+export function validateLrc (content: string) {
+  const tagRegex = /^\[([^\]]+)\]/;
+  const timestampRegex = /^\[\d{2}:\d{2}\.\d{2,3}\]/;
+  const metaKeys = new Set(
+    ["ti", "ar", "al", "au", "lr", "by", "offset", "length", "re", "ve"]
+  );
+
+  const lines = content.split("\n");
+  for (const [i, line] of lines.entries()) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+
+    if (trimmed.startsWith("[") === false) {
+      throw new Error(`Line ${i + 1} is invalid.`);
+    }
+
+    const tag = trimmed.match(tagRegex)?.[1];
+    if (!tag) continue; // plain text line, fine
+
+    const isMeta = metaKeys.has(tag.split(":")[0]);
+    if (isMeta) continue;
+
+    if (!timestampRegex.test(trimmed)) {
+      throw new Error(`Line ${i + 1} has an invalid timestamp: "${trimmed}"`);
+    }
+  }
 }
 
 function sortTimestamps (timestamps: number[]) {
