@@ -161,7 +161,7 @@ function DataPanel ({
       </div>
 
       <div className={styles.appInfo}>
-        {TOOL_NAME} — {TOOL_VERSION}
+        {TOOL_NAME} — {TOOL_VERSION} (BETA)
       </div>
     </div>
   );
