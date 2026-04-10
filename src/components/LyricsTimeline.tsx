@@ -10,6 +10,7 @@ import styles from './LyricsTimeline.module.scss';
 import TimelineCursor from './TimelineCursor';
 import TimelineEntries from './TimelineEntries';
 import TimelineRuler from './TimelineRuler';
+import TimelineWaveform from './TimelineWaveform';
 
 export const TimelineMetrics = {
   paddingY: 64,
@@ -110,6 +111,16 @@ const LyricsTimeline = memo(function LyricsTimeline ({
           />
         </div>
       </div>
+
+      {songCtx.fileUrl && <div
+        className={styles.waveform}
+      >
+        <TimelineWaveform
+          totalMs={file.length}
+          msPerPx={msPerPx}
+          scrollOffset={scrollOffset}
+        />
+      </div>}
 
       {mousePos !== null && <TimelineCursor
         style={{ zIndex: 10_010 }}

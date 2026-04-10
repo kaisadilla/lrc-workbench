@@ -83,10 +83,10 @@
     }
 
     > button {
-      --col-bg: var(--color-primary);
+      --col-bg: var(--color-primary-l2);
       --col-border: var(--color-primary-d3);
-      --col-hover: var(--color-primary-l1);
-      --col-active: var(--color-primary-d1);
+      --col-hover: var(--color-primary-l3);
+      --col-active: var(--color-primary-l1);
 
       flex-shrink: 0;
 

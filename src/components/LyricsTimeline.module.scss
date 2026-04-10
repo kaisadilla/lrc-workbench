@@ -36,4 +36,14 @@
       border-bottom: 1px solid white;
     }
   }
+
+  > .waveform {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+
+    width: 128px;
+    height: 100%;
+  }
 }
