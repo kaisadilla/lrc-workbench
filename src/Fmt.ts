@@ -19,7 +19,7 @@ const Fmt = {
 
     let secondsStr = String(s).padStart(2, '0');
     if (decimalDigits > 0) {
-      const ms = Math.round((seconds % 1) * Math.pow(10, decimalDigits));
+      const ms = Math.floor((seconds % 1) * Math.pow(10, decimalDigits));
 
       secondsStr += '.' + String(ms).padStart(decimalDigits, '0');
     }
