@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import styles from './App.module.scss';
 import CodeEditor from './components/CodeEditor';
 import DataPanel from './components/DataPanel';
+import Lyrics from './components/Lyrics';
 import LyricsTimeline from './components/LyricsTimeline';
 import MusicPlayer from './components/MusicPlayer';
 import { useSongFile } from './context/useSongFile';
@@ -78,7 +79,7 @@ function App () {
               </Tabs.Panel>
 
               <Tabs.Panel value='preview'>
-                Work in progress...
+                <Lyrics />
               </Tabs.Panel>
             </Tabs>
           </Panel>

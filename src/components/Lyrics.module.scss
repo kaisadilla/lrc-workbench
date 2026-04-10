@@ -1,0 +1,55 @@
+.lyrics, .noLyrics {
+  width: 100%;
+  height: 100%;
+
+  user-select: none;
+
+  background-color: var(--color-primary);
+}
+
+.lyrics {
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 12px;
+
+  .line {
+    font-size: 16pt;
+    font-weight: 600;
+    color: var(--color-primary-l3);
+
+    font-family: font('Jost');
+    text-align: center;
+    line-height: 1.2em;
+
+    transition: color 0.25s, font-size 0.25s;
+
+    &:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    &[data-active=true] {
+      color: white;
+      font-size: 20pt;
+      margin: 12px 0;
+    }
+  }
+}
+
+.noLyrics {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  font-size: 18pt;
+  font-style: italic;
+  font-weight: 300;
+}
