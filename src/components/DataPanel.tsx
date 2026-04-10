@@ -65,6 +65,8 @@ function DataPanel ({
     
     lyricsRef.current.focus();
     lyricsRef.current.setSelectionRange(span.start, span.end);
+    
+    songCtx.setHighlightedLine(null);
   }, [songCtx.highlightedLine]);
 
   return (

@@ -1,7 +1,7 @@
 const Fmt = {
   timestamp (
     seconds: number,
-    msDigits: number = 0,
+    decimalDigits: number = 0,
     startAt: 'h' | 'm' | 's' = 's',
   ) {
     const h = Math.floor(seconds / 3600);
@@ -18,10 +18,10 @@ const Fmt = {
     if (showMins) parts.push(String(m).padStart(2, '0'));
 
     let secondsStr = String(s).padStart(2, '0');
-    if (msDigits > 0) {
-      const ms = Math.round((seconds % 1) * 1000);
+    if (decimalDigits > 0) {
+      const ms = Math.round((seconds % 1) * Math.pow(10, decimalDigits));
 
-      secondsStr += '.' + String(ms).padStart(msDigits, '0');
+      secondsStr += '.' + String(ms).padStart(decimalDigits, '0');
     }
 
     parts.push(secondsStr);
