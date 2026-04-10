@@ -2,6 +2,7 @@ import { modals } from '@mantine/modals';
 import { ArrowLineDownIcon, FilePlusIcon, FloppyDiskIcon, FolderOpenIcon } from '@phosphor-icons/react';
 import { saveAs } from "file-saver";
 import { useDispatch, useSelector } from 'react-redux';
+import { useSongFile } from '../context/useSongFile';
 import Button from '../elements/Button';
 import DescriptiveTooltip from '../elements/DescriptiveTooltip';
 import Local from '../Local';
@@ -17,6 +18,8 @@ export interface AppRibbonProps {
 function AppRibbon (props: AppRibbonProps) {
   const file = useSelector((state: RootState) => state.file);
   const dispatch = useDispatch();
+
+  const songCtx = useSongFile();
 
   const newModal = () => modals.openConfirmModal({
     title: "New document",
@@ -79,6 +82,8 @@ function AppRibbon (props: AppRibbonProps) {
 
   function handleNew () {
     dispatch(fileActions.restart());
+    
+    songCtx.setFileUrl(null);
   }
 
   async function handleOpen () {

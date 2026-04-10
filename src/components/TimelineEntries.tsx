@@ -3,7 +3,7 @@ import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { disableNativeDragPreview } from '@atlaskit/pragmatic-drag-and-drop/element/disable-native-drag-preview';
 import { preventUnhandled } from '@atlaskit/pragmatic-drag-and-drop/prevent-unhandled';
 import { Tooltip } from '@mantine/core';
-import { TrashIcon } from '@phosphor-icons/react';
+import { PlayIcon, TrashIcon } from '@phosphor-icons/react';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSongFile } from '../context/useSongFile';
@@ -96,6 +96,7 @@ function TimelineEntry ({
   onFocus,
 }: TimelineEntryProps) {
   const lyrics = useSelector((state: RootState) => state.file.lyrics);
+  const songCtx = useSongFile();
 
   const [yDrag, setYDrag] = useState<number | null>(null);
 
@@ -164,6 +165,17 @@ function TimelineEntry ({
             <span className={styles.ms}>{ts.slice(-4)}</span>
           </div>
         </div>
+
+        {songCtx.fileUrl && <Tooltip label="Play exactly from here">
+          <button
+            className={styles.playButton}
+            draggable={false}
+            onMouseUp={handlePlay}
+          >
+            <PlayIcon />
+          </button>
+        </Tooltip>}
+
         <div
           className={styles.content}
           data-exists={line !== null}
@@ -186,6 +198,13 @@ function TimelineEntry ({
 
   function handleMouseDown () {
     onFocus?.(index);
+  }
+
+  function handlePlay () {
+    if (!songCtx.audioRef.current) return;
+
+    songCtx.audioRef.current.currentTime = ms / 1000;
+    songCtx.setTime(ms);
   }
 
   function handleDelete () {
