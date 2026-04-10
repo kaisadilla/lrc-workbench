@@ -82,7 +82,12 @@
       }
     }
 
-    > .playButton {
+    > button {
+      --col-bg: var(--color-primary);
+      --col-border: var(--color-primary-d3);
+      --col-hover: var(--color-primary-l1);
+      --col-active: var(--color-primary-d1);
+
       flex-shrink: 0;
 
       width: 32px;
@@ -91,16 +96,23 @@
       justify-content: center;
       align-items: center;
 
-      background-color: var(--color-success);
-      border-right: 1px solid var(--color-success-d2);
+      background-color: var(--col-bg);
+      border-right: 1px solid var(--col-border);
 
       &:hover {
-        background-color: var(--color-success-l1);
+        background-color: var(--col-hover);
       }
 
       &:active {
-        background-color: var(--color-success-d1);
+        background-color: var(--col-active);
       }
+    }
+
+    > .playButton {
+      --col-bg: var(--color-success);
+      --col-border: var(--color-success-d2);
+      --col-hover: var(--color-success-l1);
+      --col-active: var(--color-success-d1);
     }
 
     > .content {
@@ -120,24 +132,13 @@
     }
 
     > .deleteButton {
-      flex-shrink: 0;
+      --col-bg: var(--color-danger);
+      --col-border: var(--color-danger-d2);
+      --col-hover: var(--color-danger-l1);
+      --col-active: var(--color-danger-d1);
 
-      width: 32px;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      background-color: var(--color-danger);
-      border-left: 1px solid var(--color-danger-d2);
-
-      &:hover {
-        background-color: var(--color-danger-l1);
-      }
-
-      &:active {
-        background-color: var(--color-danger-d1);
-      }
+      border-left: 1px solid var(--col-border);
+      border-right: 0;
     }
   }
 }

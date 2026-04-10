@@ -3,7 +3,7 @@ import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { disableNativeDragPreview } from '@atlaskit/pragmatic-drag-and-drop/element/disable-native-drag-preview';
 import { preventUnhandled } from '@atlaskit/pragmatic-drag-and-drop/prevent-unhandled';
 import { Tooltip } from '@mantine/core';
-import { PlayIcon, TrashIcon } from '@phosphor-icons/react';
+import { ListIcon, PlayIcon, TrashIcon } from '@phosphor-icons/react';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSongFile } from '../context/useSongFile';
@@ -48,6 +48,7 @@ function TimelineEntries ({
           focused={focus === i}
           onMove={handleMoveEntry}
           onDelete={handleDeleteEntry}
+          onHighlight={handleHighlightEntry}
           onFocus={setFocus}
         />)}
       </div>
@@ -60,6 +61,10 @@ function TimelineEntries ({
 
   function handleDeleteEntry (index: number) {
     dispatch(fileActions.deleteTimestamp(index));
+  }
+
+  function handleHighlightEntry (index: number) {
+    songCtx.setHighlightedLine(index);
   }
 
   function handleMouseUp (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -82,6 +87,7 @@ interface TimelineEntryProps {
   index: number;
   focused?: boolean;
   onMove?: (index: number, newTimestamp: number) => void;
+  onHighlight?: (index: number) => void;
   onDelete?: (index: number) => void;
   onFocus?: (index: number) => void;
 }
@@ -92,6 +98,7 @@ function TimelineEntry ({
   index,
   focused,
   onMove,
+  onHighlight,
   onDelete,
   onFocus,
 }: TimelineEntryProps) {
@@ -176,6 +183,16 @@ function TimelineEntry ({
           </button>
         </Tooltip>}
 
+        {line && <Tooltip label="Select line in lyrics input">
+          <button
+            className={styles.selectLineButton}
+            draggable={false}
+            onMouseUp={handleSelectLine}
+          >
+            <ListIcon />
+          </button>
+        </Tooltip>}
+
         <div
           className={styles.content}
           data-exists={line !== null}
@@ -205,6 +222,10 @@ function TimelineEntry ({
 
     songCtx.audioRef.current.currentTime = ms / 1000;
     songCtx.setTime(ms);
+  }
+
+  function handleSelectLine () {
+    onHighlight?.(index);
   }
 
   function handleDelete () {

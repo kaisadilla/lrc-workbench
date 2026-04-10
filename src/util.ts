@@ -170,3 +170,18 @@ export async function getAudioDuration (url: string) {
 
   return Math.floor(audio.duration * 1000);
 }
+
+/**
+ * Given a string, returns the indices of the start and end of the line given.
+ * @param str The string in which to run the calculation.
+ * @param line The index of the line (starting from 0).
+ */
+export function getLineSpan (
+  str: string, line: number, separator: string = "\n"
+) {
+  const lines = str.split(separator);
+  const start = lines.slice(0, line).join(separator).length + (line > 0 ? 1 : 0);
+  const end = start + lines[line].length;
+  
+  return { start, end, };
+}

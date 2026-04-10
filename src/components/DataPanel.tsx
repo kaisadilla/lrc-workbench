@@ -1,5 +1,5 @@
 import { Button, Textarea, TextInput, Tooltip } from '@mantine/core';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { TOOL_NAME, TOOL_VERSION } from '../Constants';
 import { useSongFile } from '../context/useSongFile';
@@ -7,8 +7,10 @@ import TimeAmountInput from '../elements/TimeAmountInput';
 import useReduxStringField from '../hooks/useReduxStringField';
 import { fileActions } from '../state/fileSlice';
 import type { RootState } from '../state/store';
-import { getAudioDuration, openFile } from '../util';
+import { getAudioDuration, getLineSpan, openFile } from '../util';
 import styles from './DataPanel.module.scss';
+
+const ENDL = "\n";
 
 export interface DataPanelProps {
   
@@ -23,6 +25,8 @@ function DataPanel ({
   const dispatch = useDispatch();
 
   const [ lyrics, setLyrics ] = useState("a\nb");
+
+  const lyricsRef = useRef<HTMLTextAreaElement>(null);
 
   const title = useReduxStringField(
     file.title,
@@ -50,8 +54,18 @@ function DataPanel ({
   );
 
   useEffect(() => {
-    setLyrics(file.lyrics.join("\n"));
+    setLyrics(file.lyrics.join(ENDL));
   }, [file.lyrics]);
+
+  useEffect(() => {
+    if (songCtx.highlightedLine === null) return;
+    if (!lyricsRef.current) return; 
+
+    const span = getLineSpan(file.lyrics.join(ENDL), songCtx.highlightedLine);
+    
+    lyricsRef.current.focus();
+    lyricsRef.current.setSelectionRange(span.start, span.end);
+  }, [songCtx.highlightedLine]);
 
   return (
     <div className={styles.panel}>
@@ -132,6 +146,7 @@ function DataPanel ({
         />
 
         <Textarea
+          ref={lyricsRef}
           classNames={{
             root: styles.lyricsTextarea,
             wrapper: styles.lyricsTextareaWrapper,
