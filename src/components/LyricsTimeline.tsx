@@ -68,10 +68,10 @@ const LyricsTimeline = memo(function LyricsTimeline ({
   useEffect(() => {
     if (songCtx.isPlaying && scrollableBoxRef.current) {
       const rect = scrollableBoxRef.current.getBoundingClientRect();
-      const yMaxView = rect.bottom + scrollOffset;
+      const yMaxView = rect.height + scrollOffset;
 
       if (songCursorYAbs < scrollOffset || songCursorYAbs > yMaxView) {
-        scrollableBoxRef.current.scrollTop = songCursorYAbs - (rect.bottom / 2);
+        scrollableBoxRef.current.scrollTop = songCursorYAbs - (rect.height / 2);
       }
     }
   }, [songCursorYAbs, songCtx.isPlaying]);
