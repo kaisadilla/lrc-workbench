@@ -157,11 +157,9 @@ function TimelineEntry ({
       onMouseDown={handleMouseDown}
       data-focused={focused}
     >
-      <div
-        className={styles.handle}
-      >
-        
-      </div>
+      <div className={styles.reference} />
+
+      <div className={styles.handle} />
 
       <div className={styles.bridge} />
 

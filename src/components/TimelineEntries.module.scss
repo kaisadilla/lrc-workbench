@@ -31,6 +31,24 @@
     z-index: 100;
   }
 
+  > .reference {
+    visibility: hidden;
+
+    position: absolute;
+    left: 64px;
+    top: 0;
+
+    width: calc(100% + 32px);
+    height: 1px;
+    
+    background-color: magenta;
+    z-index: -1;
+  }
+
+  &:hover > .reference {
+    visibility: visible;
+  }
+
   > .handle {
     width: 25px;
     height: 7px;
