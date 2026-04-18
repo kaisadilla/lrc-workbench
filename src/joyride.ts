@@ -53,7 +53,7 @@ const JOYRIDE_STEPS: Step[] = [
   {
     target: '#lyrics-timeline',
     title: "Adding lyrics",
-    content: "While the song is playing, you can see a yellow cursor indicating exactly where the song is right now. You can press the key 'A' at any moment to add the next line of the song to the timeline. Add a few lines!",
+    content: "While the song is playing, you can see a yellow cursor indicating exactly where the song is right now. You can press the 'A' key at any moment to add the next line of the song to the timeline. Add a few lines!",
     placement: 'left',
   },
   {
