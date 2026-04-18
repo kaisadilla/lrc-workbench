@@ -43,6 +43,9 @@ function App () {
       arrowColor: 'white',
       zIndex: 1_000_000_000,
       skipBeacon: true,
+      showProgress: true,
+      dismissKeyAction: 'close',
+      targetWaitTimeout: 100,
     },
   });
 

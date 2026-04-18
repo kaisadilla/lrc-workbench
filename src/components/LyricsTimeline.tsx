@@ -142,6 +142,12 @@ const LyricsTimeline = memo(function LyricsTimeline ({
         scrollOffset={scrollOffset}
         msPerPx={msPerPx}
       />}
+
+      {songCtx.isPlaying && <div
+        className={styles.addLyricsWithKeyboardHelpTooltip}
+      >
+        Press 'A' to add a new line exactly where the song is right now.
+      </div>}
     </div>
   );
 

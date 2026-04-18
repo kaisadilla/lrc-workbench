@@ -19,7 +19,7 @@ const JOYRIDE_STEPS: Step[] = [
   {
     target: '#data-panel-lyrics-input',
     title: "Lyrics",
-    content: "Now, we need to write down (or paste) the lyrics of the song. Separate lines with newlines naturally."
+    content: "Now, we need to write down (or paste) the lyrics of the song. Separate lines with newlines naturally.",
   },
   {
     target: '#lyrics-timeline',
@@ -30,7 +30,7 @@ const JOYRIDE_STEPS: Step[] = [
   {
     target: '#lyrics-timeline',
     title: "Lyrics timeline",
-    content: "If you hover your mouse over the timeline, a light blue cursor will appear. You can press the '+' button on its left to add the next line at that exact position.",
+    content: "If you hover your mouse over the timeline, a light blue cursor will appear. You can press the '+' button on its left to add the next line at that exact position. Below the cursor, you can see which line will be added at that exact point if you choose to do so.",
     placement: 'left',
   },
   {

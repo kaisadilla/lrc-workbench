@@ -46,4 +46,22 @@
     width: 128px;
     height: 100%;
   }
+
+  > .addLyricsWithKeyboardHelpTooltip {
+    pointer-events: none;
+    
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    z-index: 10000;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #ffffffa0;
+    font-size: 10pt;
+  }
 }
