@@ -27,7 +27,7 @@ function MusicPlayer ({
   );
 
   return (
-    <div className={styles.container}>
+    <div id="music-player" className={styles.container}>
       <audio
         ref={audioRef}
         src={songCtx.fileUrl ?? undefined}
@@ -58,6 +58,7 @@ function MusicPlayer ({
           label={songCtx.isPlaying ? "Pause" : "Play"}
         >
           <button
+            id="music-player-play-button"
             className={styles.playPauseButton}
             onClick={handlePlay}
           >

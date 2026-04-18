@@ -79,6 +79,7 @@ const LyricsTimeline = memo(function LyricsTimeline ({
   return (
     <div
       ref={elRef}
+      id="lyrics-timeline"
       className={styles.element}
       style={{
         "--ruler-width": `${TimelineMetrics.rulerWidth}px`,
@@ -132,6 +133,7 @@ const LyricsTimeline = memo(function LyricsTimeline ({
       />}
 
       {songCtx.fileUrl && <TimelineCursor
+        id="song-cursor"
         style={{
           '--color': "yellow",
           zIndex: 10_000,

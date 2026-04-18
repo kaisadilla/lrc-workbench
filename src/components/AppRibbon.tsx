@@ -1,5 +1,5 @@
 import { modals } from '@mantine/modals';
-import { ArrowLineDownIcon, FilePlusIcon, FloppyDiskIcon, FolderOpenIcon } from '@phosphor-icons/react';
+import { ArrowLineDownIcon, FilePlusIcon, FloppyDiskIcon, FolderOpenIcon, InfoIcon } from '@phosphor-icons/react';
 import { saveAs } from "file-saver";
 import { useDispatch, useSelector } from 'react-redux';
 import { useSongFile } from '../context/useSongFile';
@@ -12,10 +12,12 @@ import { openFile } from '../util';
 import styles from './AppRibbon.module.scss';
 
 export interface AppRibbonProps {
-  
+  onStartTour: () => void;
 }
 
-function AppRibbon (props: AppRibbonProps) {
+function AppRibbon ({
+  onStartTour,
+}: AppRibbonProps) {
   const file = useSelector((state: RootState) => state.file);
   const dispatch = useDispatch();
 
@@ -55,6 +57,7 @@ function AppRibbon (props: AppRibbonProps) {
       </DescriptiveTooltip>
       
       <DescriptiveTooltip
+        id="ribbon-commit-button"
         label={"Commit"}
         description={"Commit changes locally, preserving them after you close this app."}
         position='right'
@@ -67,6 +70,7 @@ function AppRibbon (props: AppRibbonProps) {
       </DescriptiveTooltip>
       
       <DescriptiveTooltip
+        id="ribbon-save-button"
         label={"Save file"}
         description={"Save the current document as a .lrc file, ready to use elsewhere."}
         position='right'
@@ -75,6 +79,17 @@ function AppRibbon (props: AppRibbonProps) {
           onClick={handleSave}
         >
           <FloppyDiskIcon size={24} weight='thin' />
+        </Button>
+      </DescriptiveTooltip>
+
+      <DescriptiveTooltip
+        label={"Start tour"}
+        description={"Do a quick tour around this app's interface to explain it."}
+      > 
+        <Button
+          onClick={onStartTour}
+        >
+          <InfoIcon size={24} weight='thin' />
         </Button>
       </DescriptiveTooltip>
     </div>

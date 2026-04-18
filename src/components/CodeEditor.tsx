@@ -38,10 +38,10 @@ function CodeEditor (props: CodeEditorProps) {
       <Ribbon align='right' position='bottom'>
         <Ribbon.Button
           tooltip="Apply your changes, or show an error if the file is no longer valid."
-          onClick={handleCommit}
+          onClick={handleApply}
         >
           <ArrowLineDownIcon size={24} weight='thin' />
-          <div>Commit</div>
+          <div>Apply</div>
         </Ribbon.Button>
 
         <Ribbon.Button
@@ -55,7 +55,7 @@ function CodeEditor (props: CodeEditorProps) {
     </div>
   );
 
-  function handleCommit () {
+  function handleApply () {
     try {
       validateLrc(code);
 
@@ -80,7 +80,7 @@ function CodeEditor (props: CodeEditorProps) {
   }
 
   function handleDiscard () {
-
+    setCode(generateLrcFile(file));
   }
 }
 

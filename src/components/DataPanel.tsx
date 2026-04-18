@@ -76,6 +76,7 @@ function DataPanel ({
           label="Open a song file to import some of its data and to be able to play it."
         >
           <Button
+            id="open-song-file-button"
             onClick={handleOpenSong}
           >
             Open song file
@@ -83,6 +84,7 @@ function DataPanel ({
         </Tooltip>
 
         <TextInput
+          id="data-panel-title-input"
           label="Title"
           placeholder="The song's title"
           value={title.value}
@@ -127,6 +129,7 @@ function DataPanel ({
         </div>
 
         <TimeAmountInput
+          id="data-panel-length-input"
           label="Length"
           tooltip="The duration of the song."
           value={file.length}
@@ -149,6 +152,7 @@ function DataPanel ({
 
         <Textarea
           ref={lyricsRef}
+          id="data-panel-lyrics-input"
           classNames={{
             root: styles.lyricsTextarea,
             wrapper: styles.lyricsTextareaWrapper,

@@ -23,6 +23,7 @@ function TimeAmountInput ({
   required,
   value,
   onBlur,
+  id,
   ...inputWrapperProps
 }: TimeAmountInputProps) {
   value ??= 0;
@@ -44,7 +45,7 @@ function TimeAmountInput ({
       onBlur={handleBlur}
       {...inputWrapperProps}
     >
-      <div className={styles.container}>
+      <div id={id} className={styles.container}>
         <NumberInput
           allowDecimal={false}
           allowNegative={false}

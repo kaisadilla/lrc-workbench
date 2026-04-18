@@ -10,6 +10,10 @@
 
 }
 
+body {
+  overflow: hidden;
+}
+
 button,
 [role=button] {
   &:not([disabled]) {
@@ -32,4 +36,10 @@ h5 {
   font-size: 10pt;
   font-weight: 600;
   margin: 12px 0;
+}
+
+#react-joyride-portal {
+  .react-joyride__tooltip, button {
+    border-radius: 0 !important;
+  }
 }

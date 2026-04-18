@@ -11,6 +11,7 @@ import './styles/root.scss';
 
 import { Tabs } from '@mantine/core';
 import { useEffect, useState } from 'react';
+import { useJoyride } from 'react-joyride';
 import { useDispatch } from 'react-redux';
 import styles from './App.module.scss';
 import CodeEditor from './components/CodeEditor';
@@ -19,6 +20,7 @@ import Lyrics from './components/Lyrics';
 import LyricsTimeline from './components/LyricsTimeline';
 import MusicPlayer from './components/MusicPlayer';
 import { useSongFile } from './context/useSongFile';
+import JOYRIDE_STEPS from './joyride';
 import { fileActions } from './state/fileSlice';
 import { isEventTargetEditable } from './util';
 
@@ -29,6 +31,20 @@ function App () {
   const songCtx = useSongFile();
 
   const [ docTab, setDocTab ] = useState<DocTab | null>('timeline');
+  
+  const tour = useJoyride({
+    steps: JOYRIDE_STEPS,
+    continuous: true,
+    options: {
+      spotlightRadius: 0,
+      primaryColor: 'var(--color-primary)',
+      backgroundColor: 'white',
+      textColor: 'black',
+      arrowColor: 'white',
+      zIndex: 1_000_000_000,
+      skipBeacon: true,
+    },
+  });
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
@@ -41,7 +57,10 @@ function App () {
   return (
     <div className={styles.app}>
       <div className={styles.panelContainer}>
-        <AppRibbon />
+        {tour.Tour}
+
+        <AppRibbon onStartTour={handleStartTour} />
+
         <Group id="lrc-workbench-app-page">
           <Panel minSize={1} defaultSize={3}>
             <DataPanel />
@@ -61,11 +80,11 @@ function App () {
                   Timeline
                 </Tabs.Tab>
 
-                <Tabs.Tab value='code'>
+                <Tabs.Tab id="editor-panel-tab-code-button" value='code'>
                   Code
                 </Tabs.Tab>
 
-                <Tabs.Tab value='preview'>
+                <Tabs.Tab id="editor-panel-tab-preview-button" value='preview'>
                   Preview
                 </Tabs.Tab>
               </Tabs.List>
@@ -98,6 +117,10 @@ function App () {
     if (evt.code === 'KeyA') {
       dispatch(fileActions.addTimestamp(songCtx.time));
     }
+  }
+
+  function handleStartTour () {
+    tour.controls.start();
   }
 };
 
