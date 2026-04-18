@@ -57,12 +57,12 @@ function AppRibbon ({
       </DescriptiveTooltip>
       
       <DescriptiveTooltip
-        id="ribbon-commit-button"
         label={"Commit"}
         description={"Commit changes locally, preserving them after you close this app."}
         position='right'
       >
         <Button
+          id="ribbon-commit-button"
           onClick={handleCommit}
         >
           <ArrowLineDownIcon size={24} weight='thin' />
@@ -70,12 +70,12 @@ function AppRibbon ({
       </DescriptiveTooltip>
       
       <DescriptiveTooltip
-        id="ribbon-save-button"
         label={"Save file"}
         description={"Save the current document as a .lrc file, ready to use elsewhere."}
         position='right'
       >
         <Button
+          id="ribbon-save-button"
           onClick={handleSave}
         >
           <FloppyDiskIcon size={24} weight='thin' />
