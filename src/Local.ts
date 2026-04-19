@@ -1,9 +1,18 @@
 import type { FileSlice } from "./state/fileSlice";
 
 const KEY_PREFIX = "azaria/lrc-workbench";
+const KEY_TOUR_COMPLETED = KEY_PREFIX + "/tour-completed";
 const KEY_FILE = KEY_PREFIX + "/file";
 
 const Local = {
+  getTourCompleted () {
+    return localStorage.getItem(KEY_TOUR_COMPLETED) === "true"
+  },
+
+  setTourCompleted () {
+    localStorage.setItem(KEY_TOUR_COMPLETED, "true");
+  },
+
   saveFile (file: FileSlice) {
     try {
       const json = JSON.stringify(file);

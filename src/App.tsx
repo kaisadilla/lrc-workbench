@@ -21,6 +21,7 @@ import LyricsTimeline from './components/LyricsTimeline';
 import MusicPlayer from './components/MusicPlayer';
 import { useSongFile } from './context/useSongFile';
 import JOYRIDE_STEPS from './joyride';
+import Local from './Local';
 import { fileActions } from './state/fileSlice';
 import { isEventTargetEditable } from './util';
 
@@ -47,6 +48,9 @@ function App () {
       dismissKeyAction: 'close',
       targetWaitTimeout: 100,
     },
+    onEvent: (data, controls) => {
+      if (data.status === 'finished') Local.setTourCompleted();
+    }
   });
 
   useEffect(() => {
@@ -56,6 +60,13 @@ function App () {
       document.removeEventListener('keydown', handleKeyDown);
     }
   }, [dispatch, songCtx]);
+
+  useEffect(() => {
+    if (Local.getTourCompleted()) return;
+    
+    const to = setTimeout(tour.controls.start, 1000);
+    return () => clearTimeout(to);
+  }, []);
 
   return (
     <div className={styles.app}>

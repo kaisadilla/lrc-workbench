@@ -82,6 +82,12 @@ const JOYRIDE_STEPS: Step[] = [
     title: "Preview tab",
     content: "If you want to preview how your .lrc file will look like in a music player, you can head to this tab and play the song normally.",
   },
+  {
+    target: '#ribbon-start-tour',
+    title: "Take tour again",
+    content: "If you ever need to replay this explanation, you can do so here.",
+    blockTargetInteraction: true
+  },
 ]
 
 export default JOYRIDE_STEPS;

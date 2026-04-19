@@ -87,6 +87,7 @@ function AppRibbon ({
         description={"Do a quick tour around this app's interface to explain it."}
       > 
         <Button
+          id="ribbon-start-tour"
           onClick={onStartTour}
         >
           <InfoIcon size={24} weight='thin' />
